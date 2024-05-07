@@ -1,17 +1,12 @@
-'''import streamlit as st
-
-# Eine Überschrift der ersten Ebene
-st.write("# EKG APP")
-
-# Eine Überschrift der zweiten Ebene
-st.write("## Versuchsperson auswählen")
-
-# Eine Auswahlbox, das Ergebnis wird in current_user gespeichert
-current_user = st.selectbox(
-    'Versuchsperson',
-    options = ["Nutzer1", "Nutzer2", "Nutzer 3"], key="sbVersuchsperson")'''
-
 import streamlit as st
+import read_data
+
+
+# list_person_names = read_data.get_person_list()
+# print (list_person_names)
+
+person_dict = read_data.load_person_data()
+person_names = read_data.get_person_list(person_dict)
 
 st.write("# EKG APP")
 st.write("## Versuchsperson auswählen")
@@ -23,7 +18,8 @@ if 'current_user' not in st.session_state:
 # Dieses Mal speichern wir die Auswahl als Session State
 st.session_state.current_user = st.selectbox(
     'Versuchsperson',
-    options = ["Nutzer1", "Nutzer2"], key="sbVersuchsperson")
+    options = person_names, key="sbVersuchsperson")
 
 st.write("Der Name ist: ", st.session_state.current_user) 
+
 
