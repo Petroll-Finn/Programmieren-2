@@ -17,16 +17,16 @@ list1 = []
 list1.append(eintrag_1['lastname']+ "," +  eintrag_1["firstname"])
 print (list1)'''
 
-def load_person_data():
+'''def load_person_data():
     """A Function that knows where the person database is and returns a dictionary with the persons"""
     file = open("data/person_db.json")
     person_data = json.load(file)
-    return person_data
+    return person_data'''
 
-def get_person_list(person_data):
+def get_person_list():
     """A Function that takes the persons-dictionary and returns a list auf all person names"""
-    # file = open("Vorlesung_2/person_db.json")
-    # person_data = json.load(file)
+    file = open("../data/person_db.json")
+    person_data = json.load(file)
 
     list1 = []
     for Eintrag in person_data:
@@ -36,7 +36,7 @@ def get_person_list(person_data):
 
 
 
-# print (get_person_list())
+print (get_person_list())
 
 
 '''# Opening JSON file
