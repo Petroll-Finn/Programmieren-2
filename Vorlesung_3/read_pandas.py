@@ -3,7 +3,7 @@ import pandas as pd
 # Paket
 ## zuvor !pip install plotly
 ## ggf. auch !pip install nbformat
-import plotly.express as px
+# import plotly.express as px
 
 
 def read_my_csv():
