@@ -1,5 +1,6 @@
 import pandas as pd
-
+import plotly.express as px
+import numpy as np
 
 
 ## zuvor !pip install plotly
@@ -14,20 +15,29 @@ def load_activity(path="../data/activity.csv"):
 
 
 
-print (load_activity())
+#print (load_activity())
 
+df1 = load_activity()
 
+alle_Power_Werte = df1['PowerOriginal']
 
+mittelwert_Leistung = alle_Power_Werte.mean()
+#print(mittelwert_Leistung)
 
+max_Leistung = alle_Power_Werte.max()
+#print(max_Leistung)
 
+def time():
+    point = 1804
+    total_seconds = 30 * 60 + 5
+    time_points = np.linspace(0, total_seconds, point)
+    return (time_points)
 
+print(time())
 
+fig = px.line(df1, x=time(), y=[df1['PowerOriginal'], df1['HeartRate']], title='Leistung und Herzfrequenz über die Zeit')
 
-
-
-
-
-
+fig.show()
 # def make_plot(df):
 
     # Erstellte einen Line Plot, der ersten 2000 Werte mit der Zeit aus der x-Achse
