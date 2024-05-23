@@ -1,5 +1,5 @@
 import pandas as pd
-import plotly_express as px
+import plotly.express as px
 
 def load_activity(path = "../data/activity.csv"):
     df = pd.read_csv(path)
