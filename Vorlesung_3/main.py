@@ -1,8 +1,16 @@
 import streamlit as st
-from read_pandas import read_my_csv
-from read_pandas import make_plot
+from read_pandas import load_activity, make_Plot
 
 
+df = load_activity()
+fig = make_Plot(df)
+st.plotly_chart(fig)
+
+
+
+
+
+'''
 # Wo startet sie Zeitreihe
 # Wo endet sich
 # Was ist die Maximale und Minimale Spannung
@@ -13,13 +21,13 @@ with tab1:
     st.header("EKG-Data")
     st.write("# My Plot")
 
-    df = read_my_csv()
-    fig = make_plot(df)
+    df = load_activity()
+    fig = make_Plot(df)
 
     st.plotly_chart(fig)
 
 with tab2:
-    st.header("Power-Data")
+    st.header("Power-Data")'''
 
 
 
