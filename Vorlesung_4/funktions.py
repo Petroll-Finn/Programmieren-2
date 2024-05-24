@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
     df2 = pd.DataFrame(columns=['Spalte1', 'Spalte2'])
     # new_row = {'Spalte1111': 3, 'Spalte2': 3 * 10}
-    df2.loc[1] = [1, 1 * 10]
+    # df2.loc[1] = [1, 1 * 10]
     # Neue Zeile zum DataFrame hinzufügen
     # df2 = df2._append(new_row, ignore_index=True)
     # print (df2)
