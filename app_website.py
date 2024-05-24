@@ -1,8 +1,12 @@
 import streamlit as st
-import read_data
+from Vorlesung_2 import read_data
+from Vorlesung_3 import read_pandas
+from Vorlesung_4 import funktions
 from PIL import Image
 from streamlit_option_menu import option_menu
 
+
+# read_pandas.print_hallo()
 #sidebar erstellen
 
 with st.sidebar:
@@ -31,8 +35,13 @@ if selected == "Personen":
         # Dieses Mal speichern wir die Auswahl als Session State
         st.session_state.current_user = st.selectbox('Versuchsperson', options = list_person_names, key="sbVersuchsperson")
 
-        # st.write("Der Name ist: ", st.session_state.current_user) 
-
+        # st.write("Der Name ist: ", st.session_state.current_user)
+    
+    
+        # if st.session_state.current_user == "Huber, Julian":
+            # st.write ("hier sind daten von Julian Huber ")
+        
+        # suchstring_ = st.session_state.current_user 
 
 
 
@@ -49,7 +58,8 @@ if selected == "Personen":
             st.session_state.picture_path = read_data.find_person_data_by_name(st.session_state.current_user)["picture_path"]
 
         # Öffne das Bild und Zeige es an
-        image = Image.open("../" + st.session_state.picture_path)
+        # image = Image.open("../" + st.session_state.picture_path)
+        image = Image.open(st.session_state.picture_path)
         st.image(image)
 
         # Personen Daten
@@ -57,4 +67,16 @@ if selected == "Personen":
         st.write ("Nachname: " + read_data.find_person_data_by_name(st.session_state.current_user)["lastname"])
         st.write ("Geburtsjahr: " + str (read_data.find_person_data_by_name(st.session_state.current_user)["date_of_birth"]))
 
+if selected == "EKG":
+    # st.write ("Hier ist die Grafik der EKG Aufzeichnung")
+    df = read_pandas.load_activity()
+    fig = read_pandas.make_plot_EKG(df)
+    st.plotly_chart(fig)
+
+
+if selected == "Power Curve":
+    # st.write ("Hier ist die Grafik der Power Curve")
+    df = funktions.load_activity()
+    fig = funktions.make_plot_PowerCurve(df)
+    st.plotly_chart(fig)
 

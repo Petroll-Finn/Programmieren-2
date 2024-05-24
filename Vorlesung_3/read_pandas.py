@@ -2,7 +2,12 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 
-def load_activity(path="../data/activity.csv"):
+def print_hallo ():
+    print ("hallo von read pandas")
+
+
+
+def load_activity(path="data/activity.csv"):
     df = pd.read_csv(path)
     return df
 
@@ -27,19 +32,19 @@ def time():
     return (time_points)
 
 
-def make_Plot (df):
+def make_plot_EKG (df):
     fig = px.line(df, x=time(), y=[df['PowerOriginal'], df['HeartRate']], title='Leistung und Herzfrequenz über die Zeit', labels={'x': 'Zeit [s]', 'value': 'Leistung[w] / Heart Rate[Bpm]'})
-
-    fig.show()
-
+    # fig.show()
+    return fig
 
 
 if __name__ == '__main__':
+    print ("nochmal Hallo")
     df = load_activity()
-
+    print_hallo()
     print (mittelwert(df))
     print (max_Leistung (df))
-    make_Plot(df)
+    make_plot_EKG(df)
 
 
 

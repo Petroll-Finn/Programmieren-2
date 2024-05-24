@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 
-def load_activity(path = "../data/activity.csv"):
+def load_activity(path = "data/activity.csv"):
     df = pd.read_csv(path)
     return df
 
@@ -36,10 +36,10 @@ def return_df_for_plotting (df, window_lenghts = list(range(1, 1806))):
 # [1,5,15,30,45,60,90,120,240,300,360,420,480]
 
 
-def make_plot (df):
+def make_plot_PowerCurve (df):
     fig = px.line(return_df_for_plotting (df), x='Duration [s]', y='Best Effort[W]', title='Power Curve')
-    fig.show()
-
+    # fig.show()
+    return fig
 
 
 if __name__ == '__main__':
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     print (find_best_effort(df, 10))
     # print (return_df_for_plotting (df))
 
-    make_plot (df)
+    make_plot_PowerCurve (df)
 
     df2 = pd.DataFrame(columns=['Spalte1', 'Spalte2'])
     # new_row = {'Spalte1111': 3, 'Spalte2': 3 * 10}
