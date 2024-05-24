@@ -14,6 +14,7 @@ def get_person_list():
     for Eintrag in person_data:
         list1.append(Eintrag['lastname']+ ", " +  Eintrag["firstname"])
 
+    
     return list1
 
 
@@ -31,17 +32,18 @@ def find_person_data_by_name(suchstring):
     nachname = two_names[0]
 
     for eintrag in person_data:
-        print(eintrag)
+        # print(eintrag)
         if (eintrag["lastname"] == nachname and eintrag["firstname"] == vorname):
             # print (eintrag)
             return eintrag
-    else:
-        return {}
+        
+    return {}
 
 
 
 
 if __name__ == "__main__":
+    # print (load_person_data ())
     print(get_person_list())
-    find_person_data_by_name("Huber, Julian")
+    print (find_person_data_by_name("Huber, Julian"))
 
