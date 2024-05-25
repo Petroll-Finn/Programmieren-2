@@ -4,11 +4,6 @@ import numpy as np
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-def print_hallo ():
-    print ("hallo von read pandas")
-
-
-
 def load_activity(path="data/activity.csv"):
     df = pd.read_csv(path)
     return df
@@ -163,7 +158,11 @@ def time_in_Zones (df,max_HR):
             # print ("Zone5")
             Zone5 += 1
     
-    print (Zone3)
+    dict1 = {"Zone 1": [Zone1/60], "Zone 2": [Zone2/60], "Zone 3": [Zone3/60], "Zone 4": [Zone4/60], "Zone 5": [Zone5/60],}
+    # dict = pd.DataFrame(dict1)
+    # Konvertiere das Dictionary in ein DataFrame
+    # dict1 = pd.DataFrame(list(dict1.items()), columns=['Zone', 'Dauer (Minuten)'])
+    return dict1
 
 # def calc_time_in_Zones (df,max_HR):
 
@@ -174,6 +173,10 @@ if __name__ == '__main__':
     # print (max_Herzfrequenz(df))
 
     print (time_in_Zones(df,200))
+    dic = time_in_Zones(df,200)
+    dict = pd.DataFrame(dic)
+    print (dict)
+    
     # calc_time_in_Zones (df, 190)
     # calc_Zones(100)
     # print (mittelwert(df))

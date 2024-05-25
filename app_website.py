@@ -1,10 +1,11 @@
 import streamlit as st
+import pandas as pd
 from Vorlesung_2 import read_data
 from Vorlesung_3 import read_pandas
 from Vorlesung_4 import funktions
 from PIL import Image
 from streamlit_option_menu import option_menu
-
+from Vorlesung_3.read_pandas import time_in_Zones
 
 # read_pandas.print_hallo()
 #sidebar erstellen
@@ -68,14 +69,19 @@ if selected == "Personen":
 
 if selected == "EKG":
     
-    eingabe_wert = st.number_input('Geben Sie eine Zahl ein:', min_value=100, max_value=250)
+    eingabe_wert = st.number_input('Geben Sie eine Zahl ein:', min_value=100, max_value=250, value = 175)
     
-
     df = read_pandas.load_activity()
-    fig = read_pandas.make_plot_EKG(df,200)
+    fig = read_pandas.make_plot_EKG(df,eingabe_wert)
     st.plotly_chart(fig)
 
+    st.title('Zeit in Zonen')
+    data = time_in_Zones(df,eingabe_wert)
+    df_Zones = pd.DataFrame(data)
+    st.table(df_Zones)
+
     
+
 
 
 if selected == "Power Curve":
