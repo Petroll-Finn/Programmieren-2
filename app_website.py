@@ -24,7 +24,6 @@ if selected == "Personen":
         list_person_names = read_data.get_person_list()
         # print (list_person_names)
 
-
         st.title("# EKG APP")
         st.write("## Versuchsperson auswählen")
 
@@ -68,10 +67,15 @@ if selected == "Personen":
         st.write ("Geburtsjahr: " + str (read_data.find_person_data_by_name(st.session_state.current_user)["date_of_birth"]))
 
 if selected == "EKG":
-    # st.write ("Hier ist die Grafik der EKG Aufzeichnung")
+    
+    eingabe_wert = st.number_input('Geben Sie eine Zahl ein:', min_value=100, max_value=250)
+    
+
     df = read_pandas.load_activity()
     fig = read_pandas.make_plot_EKG(df,200)
     st.plotly_chart(fig)
+
+    
 
 
 if selected == "Power Curve":

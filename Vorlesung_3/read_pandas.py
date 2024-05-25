@@ -39,7 +39,7 @@ def max_Herzfrequenz (df):
 
 def calc_Zones (max_HR):
     list_Zones = [0.5*max_HR, 0.6*max_HR, 0.7*max_HR, 0.8*max_HR, 0.9*max_HR, 1*max_HR]
-    print (list_Zones)
+    # print (list_Zones)
 
     return list_Zones
 
@@ -54,10 +54,7 @@ def make_plot_EKG (df, max_HR):
 
     # Erstellen der Subplots mit zwei y-Achsen
     fig = make_subplots(specs=[[{"secondary_y": True}]])
-
-
     fig.add_trace(go.Scatter(x=time(), y= df['HeartRate'], name="EKG-Daten", line=dict(color='red')), secondary_y=False,)
-    
     fig.add_trace(go.Scatter(x=time(), y= df['PowerOriginal'], name="Power-Daten", line=dict(color='blue')), secondary_y=True,)
     
     
@@ -68,8 +65,6 @@ def make_plot_EKG (df, max_HR):
     yaxis_title="Heart Rate [BPM]",
     yaxis2_title="Power [w]"
     )
-
-    # fig = px.line(df, x=time(), y=[df['PowerOriginal'], df['HeartRate']], title='Leistung und Herzfrequenz über die Zeit', labels={'x': 'Zeit [s]', 'value': 'Leistung[w] / Heart Rate[Bpm]'})
     
     fig.add_shape(
     type="rect",
@@ -140,19 +135,50 @@ def make_plot_EKG (df, max_HR):
     # fig.show()
     return fig
 
+def time_in_Zones (df,max_HR):
+    heart_rate = df['HeartRate']
+    # print (heart_rate)
+    list = calc_Zones (max_HR)
+    Zone1= 0
+    Zone2= 0
+    Zone3= 0
+    Zone4= 0
+    Zone5= 0
 
+    for i in heart_rate:
+        if i >= list [0] and i < list[1]:
+            # print (i)
+            # print ("Zone1")
+            Zone1 += 1 
+        if i >= list [1] and i < list[2]:
+            # print ("Zone2")
+            Zone2 += 1
+        if i >= list [2] and i < list[3]:
+            # print ("Zone3")
+            Zone3 += 1
+        if i >= list [3] and i < list[4]:
+            # print ("Zone4")
+            Zone4 += 1
+        if i >= list [4] and i < list[5]:
+            # print ("Zone5")
+            Zone5 += 1
+    
+    print (Zone3)
 
+# def calc_time_in_Zones (df,max_HR):
 
 
 if __name__ == '__main__':
     
     df = load_activity()
-    print (max_Herzfrequenz(df))
+    # print (max_Herzfrequenz(df))
 
-    calc_Zones(100)
-    print (mittelwert(df))
-    print (max_Leistung (df))
-    make_plot_EKG(df, 210)
+    print (time_in_Zones(df,200))
+    # calc_time_in_Zones (df, 190)
+    # calc_Zones(100)
+    # print (mittelwert(df))
+    # print (max_Leistung (df))
+    # make_plot_EKG(df, 210)
 
 
 
