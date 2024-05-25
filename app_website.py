@@ -68,7 +68,7 @@ if selected == "Personen":
 
 if selected == "EKG":
     
-    eingabe_wert = st.number_input('Geben Sie eine Zahl ein:', min_value=120, max_value=250, value = 190)
+    eingabe_wert = st.number_input('Geben sie ihre maximale Herzfrequenz ein:', min_value=120, max_value=250, value = 190)
     
     df = read_pandas.load_activity()
     fig = read_pandas.make_plot_EKG(df,eingabe_wert)
