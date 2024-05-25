@@ -70,7 +70,7 @@ if selected == "Personen":
 if selected == "EKG":
     # st.write ("Hier ist die Grafik der EKG Aufzeichnung")
     df = read_pandas.load_activity()
-    fig = read_pandas.make_plot_EKG(df)
+    fig = read_pandas.make_plot_EKG(df,200)
     st.plotly_chart(fig)
 
 
@@ -78,5 +78,5 @@ if selected == "Power Curve":
     # st.write ("Hier ist die Grafik der Power Curve")
     df = funktions.load_activity()
     fig = funktions.make_plot_PowerCurve(df)
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, height = 200)
 
