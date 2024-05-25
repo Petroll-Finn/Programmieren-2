@@ -5,7 +5,6 @@ from Vorlesung_3 import read_pandas
 from Vorlesung_4 import funktions
 from PIL import Image
 from streamlit_option_menu import option_menu
-from Vorlesung_3.read_pandas import time_in_Zones
 
 # read_pandas.print_hallo()
 #sidebar erstellen
@@ -69,24 +68,36 @@ if selected == "Personen":
 
 if selected == "EKG":
     
-    eingabe_wert = st.number_input('Geben Sie eine Zahl ein:', min_value=100, max_value=250, value = 175)
+    eingabe_wert = st.number_input('Geben Sie eine Zahl ein:', min_value=120, max_value=250, value = 190)
     
     df = read_pandas.load_activity()
     fig = read_pandas.make_plot_EKG(df,eingabe_wert)
     st.plotly_chart(fig)
 
-    st.title('Zeit in Zonen')
-    data = time_in_Zones(df,eingabe_wert)
-    df_Zones = pd.DataFrame(data)
-    st.table(df_Zones)
+    # Zwei tabs erzeugen
+    tab1, tab2 = st.tabs(["Eigenschaften Leistung", "Eigenschaften der Zonen"])
+
+    # Text im ersten Tab 
+    with tab1:
+        st.subheader('Eigenschaften Leistung')
+
+        st.metric(label="Mittelwert Leistung [w]", value = round(read_pandas.mittelwert (df), 4))
+        st.metric(label="Maximale Leistung [w]", value = read_pandas.max_Leistung (df))
+
+
+    # Text im zweiten Tab
+    with tab2:
+        st.subheader('Verbrachte Zeit und Durchschnittliche Leistung der Zonen')
+        data = read_pandas.calc_time_and_average_in_Zones(df,eingabe_wert)
+        df_Zones = pd.DataFrame(data)
+        df_Zones.set_index('Zone', inplace=True)
+        st.dataframe(df_Zones)
 
     
-
-
 
 if selected == "Power Curve":
     # st.write ("Hier ist die Grafik der Power Curve")
     df = funktions.load_activity()
     fig = funktions.make_plot_PowerCurve(df)
-    st.plotly_chart(fig, height = 200)
+    st.plotly_chart(fig)
 
