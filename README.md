@@ -23,10 +23,10 @@ python -m streamlit run app_website.py
 
 ## Funktionen:
 
-Nun können Sie im Menu den Punkt Personen, EKG oder Power Curve wählen
+Nun können Sie im Menu den Punkt Personen, EKG oder Power Curve wählen.
 
 ### Personen:
-Hier können Sie zwischen drei Personen wählen und deren Namen und Geburtsjahr einsehen
+Hier können Sie zwischen drei Personen wählen und deren Namen und Geburtsjahr einsehen.
 
 ### EKG:
 Hier sehen Sie das EKG- und Leistungsdiagramm mit den entsprechenden Zonen. Über dem Diagramm können Sie die maximale Herzfrequenz einstellen, woraufhin sich die Zonen automatisch anpassen. Unter dem Diagramm können Sie die Eigenschaften der Leistung sowie der Zonen ablesen.
