@@ -1,8 +1,12 @@
-Requirements:
+Damit der Code fehlerfrei läuft, müssen folgende Bibliotheken (Requirements) vorinstalliert sein:
 
-
-
-
-
+streamlit
+    streamlit_option_menu
+pandas
+PIL
+plotly
+    plotly.express
+    plotly.subplots
+    plotly.graph_objects
 
 
