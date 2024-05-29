@@ -14,6 +14,42 @@ class EKGdata:
         file = open("data/person_db.json")
         person_data = json.load(file)
         return person_data
+    
+    @staticmethod
+    def find_peaks(id_EKG, series, threshold, respacing_factor=5):
+    
+        # A function to find the peaks in a series
+        # Args:
+            # - series (pd.Series): The series to find the peaks in
+            # - threshold (float): The threshold for the peaks
+            # - respacing_factor (int): The factor to respace the series
+        # Returns:
+            # - peaks (list): A list of the indices of the peaks
+    
+        # Respace the series
+        beispiels_Objekt = EKGdata([0]["ekg_tests"][0])
+        dict_Person = EKGdata.load_by_id (id_EKG)
+
+        series = series.iloc[::respacing_factor]
+    
+        # Filter the series
+        series = series[series>threshold]
+
+
+        peaks = []
+        last = 0
+        current = 0
+        next = 0
+
+        for index, row in series.items():
+            last = current
+            current = next
+            next = row
+
+            if last < current and current > next and current > threshold:
+                peaks.append(index-respacing_factor)
+
+        return peaks
 
     def __init__(self, ekg_dict):
         #pass
@@ -40,12 +76,7 @@ class EKGdata:
                     # print (eintrag_EKG_tests)
                     return eintrag_EKG_tests
         
-    # def find_peaks (self):
 
-        
-
-    
-    
 
 if __name__ == "__main__":
     print("This is a module with some functions to read the EKG data")
@@ -53,10 +84,12 @@ if __name__ == "__main__":
 
     person_data = json.load(file)
     # print(person_data)
+    
 
     ekg_dict = person_data[0]["ekg_tests"][0]
-    print(ekg_dict)
+    # print(ekg_dict)
     ekg = EKGdata(ekg_dict)
+    print (ekg)
     print(ekg.df.head())
 
     # print (ekg.load_by_id(4))
