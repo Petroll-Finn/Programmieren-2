@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 class Person:
     
@@ -47,6 +48,27 @@ class Person:
         self.lastname = person_dict["lastname"]
         self.picture_path = person_dict["picture_path"]
         self.id = person_dict["id"]
+    
+    def calc_age(self):
+        birth_year = int(self.date_of_birth)
+        current_year = datetime.now().year
+        age_years = current_year - birth_year
+        return age_years
+    
+    def calc_max_heart_rate(self):
+        max_hr_bpm = 220-self.calc_age()
+        return (max_hr_bpm)
+
+    def load_by_id(self, search_id):
+        file = open("data/person_db.json")
+        person_data = json.load(file)
+        if search_id == "None":
+            return "keien Eingabe"
+
+        for person in person_data:
+            if person["id"] == search_id:
+                return person
+        return "falsche id"
 
 if __name__ == "__main__":
     print("This is a module with some functions to read the person data")
@@ -54,3 +76,9 @@ if __name__ == "__main__":
     person_names = Person.get_person_list(persons)
     print(person_names)
     print(Person.find_person_data_by_name("Huber, Julian"))
+    a_dict = persons[1]
+    a_person = Person(a_dict)
+    print (a_person.calc_age())
+    print(a_person.calc_max_heart_rate())
+    print(a_person.load_by_id(2))
+
