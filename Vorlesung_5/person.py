@@ -74,8 +74,8 @@ if __name__ == "__main__":
     print("This is a module with some functions to read the person data")
     persons = Person.load_person_data()
     person_names = Person.get_person_list(persons)
-    print(person_names)
-    print(Person.find_person_data_by_name("Huber, Julian"))
+    # print(person_names)
+    # print(Person.find_person_data_by_name("Huber, Julian"))
     a_dict = persons[1]
     a_person = Person(a_dict)
     print (a_person.calc_age())
