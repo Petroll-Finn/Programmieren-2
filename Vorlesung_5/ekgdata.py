@@ -16,8 +16,8 @@ class EKGdata:
         return person_data
     
     @staticmethod
-    def find_peaks(id_EKG, series, threshold, respacing_factor=5):
-    
+    def find_peaks(id_EKG):
+        # series, threshold, respacing_factor=5
         # A function to find the peaks in a series
         # Args:
             # - series (pd.Series): The series to find the peaks in
@@ -27,11 +27,13 @@ class EKGdata:
             # - peaks (list): A list of the indices of the peaks
     
         # Respace the series
-        beispiels_Objekt = EKGdata([0]["ekg_tests"][0])
+        # beispiels_Objekt = EKGdata([0]["ekg_tests"][0])
         dict_Person = EKGdata.load_by_id (id_EKG)
-
+        print (dict_Person)
+        
+        '''
         series = series.iloc[::respacing_factor]
-    
+        
         # Filter the series
         series = series[series>threshold]
 
@@ -49,7 +51,7 @@ class EKGdata:
             if last < current and current > next and current > threshold:
                 peaks.append(index-respacing_factor)
 
-        return peaks
+        return peaks'''
 
     def __init__(self, ekg_dict):
         #pass
@@ -91,6 +93,7 @@ if __name__ == "__main__":
     ekg = EKGdata(ekg_dict)
     print (ekg)
     print(ekg.df.head())
+    # EKGdata.find_peaks(1)
 
     # print (ekg.load_by_id(4))
 
