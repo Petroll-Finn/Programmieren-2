@@ -9,6 +9,11 @@ import plotly.express as px
 class EKGdata:
 
 ## Konstruktor der Klasse soll die Daten einlesen
+    @staticmethod
+    def load_Data():
+        file = open("data/person_db.json")
+        person_data = json.load(file)
+        return person_data
 
     def __init__(self, ekg_dict):
         #pass
@@ -24,12 +29,39 @@ class EKGdata:
         self.fig = px.line(self.df.head(2000), x="Zeit in ms", y="Messwerte in mV")
         #return self.fig 
 
+    def load_by_id (self,id_EKG):
+        person_data = self.load_Data()
+        # print (len(person_data))
+        for eintrag_person in range(len(person_data)):
+            # print (eintrag_person)
+            for eintrag_EKG_tests in person_data[eintrag_person]["ekg_tests"]:
+                # print (eintrag_EKG_tests)
+                if eintrag_EKG_tests["id"] == id_EKG:
+                    # print (eintrag_EKG_tests)
+                    return eintrag_EKG_tests
+        
+    # def find_peaks (self):
+
+        
+
+    
+    
 
 if __name__ == "__main__":
     print("This is a module with some functions to read the EKG data")
     file = open("data/person_db.json")
+
     person_data = json.load(file)
+    # print(person_data)
+
     ekg_dict = person_data[0]["ekg_tests"][0]
     print(ekg_dict)
     ekg = EKGdata(ekg_dict)
     print(ekg.df.head())
+
+    # print (ekg.load_by_id(4))
+
+
+
+
+# %%
