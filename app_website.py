@@ -93,11 +93,16 @@ if selected == "EKG":
         df_Zones.set_index('Zone', inplace=True)
         st.dataframe(df_Zones)
 
-    
+
 
 if selected == "Power Curve":
     # st.write ("Hier ist die Grafik der Power Curve")
     df = funktions.load_activity()
-    fig = funktions.make_plot_PowerCurve(df)
+
+    frequenz = st.number_input('Geben sie ihre Frequenz ein:', min_value=1, max_value=20, value = 1)
+
+    fig = funktions.make_plot_PowerCurve(df, frequenz)
     st.plotly_chart(fig)
 
+    fig_2 = funktions.make_plot_PowerCurve_0_300(df, frequenz)
+    st.plotly_chart(fig_2)

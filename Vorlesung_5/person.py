@@ -41,7 +41,7 @@ class Person:
                 return eintrag
         else:
             return {}
-        
+    
     def __init__(self, person_dict) -> None:
         self.date_of_birth = person_dict["date_of_birth"]
         self.firstname = person_dict["firstname"]
