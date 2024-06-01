@@ -98,11 +98,18 @@ if selected == "EKG":
 if selected == "Power Curve":
     # st.write ("Hier ist die Grafik der Power Curve")
     df = funktions.load_activity()
+    st.subheader('Eingabe der Frequenz')
+    frequenz = st.number_input('Frequenz:', min_value=1, max_value=20, value = 1)
 
-    frequenz = st.number_input('Geben sie ihre Frequenz ein:', min_value=1, max_value=20, value = 1)
+    st.subheader('Zeitfenster für vergrößerten Plot')
+    # eingabe Vergrößerter Plot
+    untere_Grenze = st.number_input('untere Grenze auf der X-achse in sekunden:', min_value=0, max_value=1805, value = 0)
+    obere_Grenze_0 = st.number_input('obere Grenze auf der X-achse in sekunden:', min_value=0, max_value=1805, value = 300)
 
-    fig = funktions.make_plot_PowerCurve(df, frequenz)
-    st.plotly_chart(fig)
+    obere_Grenze = obere_Grenze_0 + 5   #Um obere Grenze auch auf der X achse anzeigen zu lassen
 
-    fig_2 = funktions.make_plot_PowerCurve_0_300(df, frequenz)
+    fig_1 = funktions.make_plot_PowerCurve(df, untere_Grenze, obere_Grenze, frequenz)
+    st.plotly_chart(fig_1)
+
+    fig_2 = funktions.make_plot_PowerCurve_zoomed(df, untere_Grenze, obere_Grenze, frequenz)
     st.plotly_chart(fig_2)
