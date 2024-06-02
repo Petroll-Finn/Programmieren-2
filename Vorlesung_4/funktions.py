@@ -30,7 +30,7 @@ def return_df_for_plotting (df, frequenz = 1, window_lenghts = list(range(1, 180
     for lenght, i in zip (window_lenghts, range(1, 1806)):
         df_BestEffort.loc[i] = [lenght, find_best_effort(df, lenght, frequenz)]
 
-    print (df_BestEffort["Duration [s]"])
+    # print (df_BestEffort["Duration [s]"])
     return df_BestEffort
 
 # [1,5,15,30,45,60,90,120,240,300,360,420,480,540,600,720,840,960,1080,1200,1320,1440,1560,1680,1800]
@@ -51,7 +51,7 @@ def make_plot_PowerCurve(df, untere_Grenze = 1, obere_Grenze = 300, frequenz = 1
     # Gesamte Linie hinzufügen
     fig.add_trace(go.Scatter(x=df_plot['Duration [s]'], y=df_plot['Best Effort[W]'], mode='lines', name='Power Curve', line=dict(color='blue', width=2)))
 
-    # Vergrößerungsbereich mit maskierten Linien erstellen
+    
     x = df_plot['Duration [s]']
     y = df_plot['Best Effort[W]']
     fig.add_trace(go.Scatter(x=x[(x >= zoom_start) & (x <= zoom_end)], y=y[(x >= zoom_start) & (x <= zoom_end)], mode='lines', name='Zoomed', line=dict(color='lightblue', width=2)))

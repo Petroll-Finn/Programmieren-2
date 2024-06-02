@@ -1,7 +1,7 @@
 # EKG und Power Analyse
 von Till und Finn
 
-Dies ist eine Streamlit-Anwendung zur Analyse von EKG- und Leistungsdaten. Die Anwendung lädt Aktivitätsdaten aus einer CSV-Datei, berechnet Herzfrequenzzonen und zeigt ein Diagramm sowie eine Tabelle mit der verbrachten Zeit und der durchschnittlichen Leistung in den verschiedenen Zonen an.
+Dies ist eine Streamlit-Anwendung zur Analyse von EKG- und Leistungsdaten. Die Anwendung lädt Aktivitätsdaten aus einer CSV-Datei, berechnet Herzfrequenzzonen und zeigt ein Diagramm sowie eine Tabelle mit der verbrachten Zeit und der durchschnittlichen Leistung in den verschiedenen Zonen an. Zusätzlich wird eine Power Curve der Power Daten erstellt.
 
 
 ## Anfoderungen:
@@ -33,4 +33,6 @@ Hier sehen Sie das EKG- und Leistungsdiagramm mit den entsprechenden Zonen. Übe
 
 ### Power Curve:
 Hier wird die Power in einem Power-Zeit-Diagramm dargestellt. 
+
+Zusätzlich kann die Frequenz eingegeben werden im falle, dass der Datensatz in einer bestimmten zeitlichen Auflösung aufgenommen wurde. Die Standart einstellung ist 1 Hz. Außerdem kann ein Zeitfenster bestimmt werden in welchem die Power Curve vergrößert angezeigt wird. Auch diese Grafik passt sich der Frequenz automatisch an. 
 
