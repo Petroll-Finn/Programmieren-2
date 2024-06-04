@@ -16,8 +16,21 @@ class EKGdata:
         return person_data
     
     @staticmethod
-    def find_peaks(id_EKG):
-        # series, threshold, respacing_factor=5
+    def load_by_id (id_EKG):
+        person_data = EKGdata.load_Data()
+        # print (len(person_data))
+        for eintrag_person in range(len(person_data)):
+            # print (eintrag_person)
+            for eintrag_EKG_tests in person_data[eintrag_person]["ekg_tests"]:
+                # print (eintrag_EKG_tests)
+                if eintrag_EKG_tests["id"] == id_EKG:
+                    # print (eintrag_EKG_tests)
+                    return eintrag_EKG_tests
+
+
+    @staticmethod
+    def find_peaks(id_EKG, respacing_factor=5):
+        # series, threshold, 
         # A function to find the peaks in a series
         # Args:
             # - series (pd.Series): The series to find the peaks in
@@ -27,11 +40,11 @@ class EKGdata:
             # - peaks (list): A list of the indices of the peaks
     
         # Respace the series
-        # beispiels_Objekt = EKGdata([0]["ekg_tests"][0])
-        dict_Person = EKGdata.load_by_id (id_EKG)
-        print (dict_Person)
         
-        '''
+        dict_Person = EKGdata.load_by_id (id_EKG)
+        
+        
+    
         series = series.iloc[::respacing_factor]
         
         # Filter the series
@@ -51,7 +64,7 @@ class EKGdata:
             if last < current and current > next and current > threshold:
                 peaks.append(index-respacing_factor)
 
-        return peaks'''
+        return peaks
 
     def __init__(self, ekg_dict):
         #pass
@@ -62,21 +75,11 @@ class EKGdata:
 
 
     def make_plot(self):
-
         # Erstellte einen Line Plot, der ersten 2000 Werte mit der Zeit aus der x-Achse
         self.fig = px.line(self.df.head(2000), x="Zeit in ms", y="Messwerte in mV")
-        #return self.fig 
+        return self.fig 
 
-    def load_by_id (self,id_EKG):
-        person_data = self.load_Data()
-        # print (len(person_data))
-        for eintrag_person in range(len(person_data)):
-            # print (eintrag_person)
-            for eintrag_EKG_tests in person_data[eintrag_person]["ekg_tests"]:
-                # print (eintrag_EKG_tests)
-                if eintrag_EKG_tests["id"] == id_EKG:
-                    # print (eintrag_EKG_tests)
-                    return eintrag_EKG_tests
+    
         
 
 
@@ -87,15 +90,15 @@ if __name__ == "__main__":
     person_data = json.load(file)
     # print(person_data)
     
-
+    
     ekg_dict = person_data[0]["ekg_tests"][0]
     # print(ekg_dict)
     ekg = EKGdata(ekg_dict)
-    print (ekg)
-    print(ekg.df.head())
+    # print (ekg)
+    # print(ekg.df.head())
     # EKGdata.find_peaks(1)
 
-    # print (ekg.load_by_id(4))
+    print (EKGdata.load_by_id(4))
 
 
 

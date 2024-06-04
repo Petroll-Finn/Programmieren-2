@@ -34,13 +34,24 @@ class Person:
         nachname = two_names[0]
 
         for eintrag in person_data:
-            print(eintrag)
+            # print(eintrag)
             if (eintrag["lastname"] == nachname and eintrag["firstname"] == vorname):
                 print()
 
                 return eintrag
         else:
             return {}
+    
+    @staticmethod   
+    def load_by_id(search_id):
+        person_data = Person.load_person_data()
+        if search_id == "None":
+            return "keien Eingabe"
+
+        for person in person_data:
+            if person["id"] == search_id:
+                return person
+        return "falsche id"
     
     def __init__(self, person_dict) -> None:
         self.date_of_birth = person_dict["date_of_birth"]
@@ -59,26 +70,20 @@ class Person:
         max_hr_bpm = 220-self.calc_age()
         return (max_hr_bpm)
 
-    def load_by_id(self, search_id):
-        file = open("data/person_db.json")
-        person_data = json.load(file)
-        if search_id == "None":
-            return "keien Eingabe"
-
-        for person in person_data:
-            if person["id"] == search_id:
-                return person
-        return "falsche id"
+    
 
 if __name__ == "__main__":
     print("This is a module with some functions to read the person data")
     persons = Person.load_person_data()
     person_names = Person.get_person_list(persons)
-    # print(person_names)
+    print(person_names)
     # print(Person.find_person_data_by_name("Huber, Julian"))
-    a_dict = persons[1]
-    a_person = Person(a_dict)
-    print (a_person.calc_age())
-    print(a_person.calc_max_heart_rate())
-    print(a_person.load_by_id(2))
 
+    a_dict = persons[2]
+    
+    a_person = Person(a_dict)
+
+    print (a_person.calc_age())
+    # print(a_person.calc_max_heart_rate())
+    # print(Person.load_by_id(1))
+    

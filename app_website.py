@@ -3,6 +3,7 @@ import pandas as pd
 from Vorlesung_2 import read_data
 from Vorlesung_3 import read_pandas
 from Vorlesung_4 import funktions
+from Vorlesung_5 import Klasse_ekgdata, Klasse_person
 from PIL import Image
 from streamlit_option_menu import option_menu
 
@@ -33,14 +34,24 @@ if selected == "Personen":
 
         # Dieses Mal speichern wir die Auswahl als Session State
         st.session_state.current_user = st.selectbox('Versuchsperson', options = list_person_names, key="sbVersuchsperson")
+        # st.write (st.session_state.current_user)
 
-        # st.write("Der Name ist: ", st.session_state.current_user)
-    
-    
-        # if st.session_state.current_user == "Huber, Julian":
-            # st.write ("hier sind daten von Julian Huber ")
+        # Json Daten Laden
+        Person_Json = read_data.load_person_data()
+
+        # Weise Personen ID zu
+        for names, ID_vergabe in zip(list_person_names, range(len(list_person_names))):
+            if st.session_state.current_user == names:
+                ID_person = ID_vergabe + 1
+        # Erstelle Inzanz
+        Person_Dict = Klasse_person.Person.load_by_id(ID_person)
+        Instanz_von_Current_user = Klasse_person.Person(Person_Dict)
         
-        # suchstring_ = st.session_state.current_user 
+
+        #Testen
+        st.write (str (Instanz_von_Current_user.calc_age()))
+        st.write (str (Instanz_von_Current_user.calc_max_heart_rate()))
+
 
 
 
@@ -65,6 +76,8 @@ if selected == "Personen":
         st.write ("Vorname: " + read_data.find_person_data_by_name(st.session_state.current_user)["firstname"])
         st.write ("Nachname: " + read_data.find_person_data_by_name(st.session_state.current_user)["lastname"])
         st.write ("Geburtsjahr: " + str (read_data.find_person_data_by_name(st.session_state.current_user)["date_of_birth"]))
+
+
 
 if selected == "EKG":
     
