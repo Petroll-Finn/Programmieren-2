@@ -81,7 +81,7 @@ class EKGdata:
         # durchschnittliche_peak_diff = sum(peak_differenz) / len(peak_differenz)
         # Herzrate= 60 / (durchschnittliche_peak_diff / 500) # 500 wegen aufnamen der Daten in [2 ms] schritten
 
-        print (Herzrate)
+        # print (Herzrate)
         return Herzrate
     
 

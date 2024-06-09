@@ -26,7 +26,10 @@ python -m streamlit run app_website.py
 Nun können Sie im Menu den Punkt Personen, EKG oder Power Curve wählen.
 
 ### Personen:
-Hier können Sie zwischen drei Personen wählen und deren Namen und Geburtsjahr einsehen.
+Hier können Sie zwischen drei Personen wählen und deren Namen, das Geburtsjahr, das Alter und die maximale Herzfrequenz einsehen. Außerdem sehen sie das Bild der Versuchsperson. 
+Es kann zusätzlich ein Vorliegender EKG Test ausgewählt werden und als plot angezeigt werden. Hier werden Außerdem die Peaks des EKG Signals als Punkte im Diagramm angezeigt.
+Unterhalb wird die entsprechende durchschnittliche Herzfrequenz, welche im Zeitfenster vorliegt, angezeigt. 
+
 
 ### EKG:
 Hier sehen Sie das EKG- und Leistungsdiagramm mit den entsprechenden Zonen. Über dem Diagramm können Sie die maximale Herzfrequenz einstellen, woraufhin sich die Zonen automatisch anpassen. Unter dem Diagramm können Sie die Eigenschaften der Leistung sowie der Zonen ablesen.

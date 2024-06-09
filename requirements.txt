@@ -8,5 +8,7 @@ plotly
     plotly.express
     plotly.subplots
     plotly.graph_objects
+numpy
+    scipy.signal
 
 
