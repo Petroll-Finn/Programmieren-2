@@ -39,20 +39,33 @@ if selected == "Personen":
         # Json Daten Laden
         Person_Json = read_data.load_person_data()
 
+        ### KLASSE PERSON
         # Weise Personen ID zu
         for names, ID_vergabe in zip(list_person_names, range(len(list_person_names))):
             if st.session_state.current_user == names:
                 ID_person = ID_vergabe + 1
-        # Erstelle Inzanz
+        
+        # Erstelle Instanz Person
         Person_Dict = Klasse_person.Person.load_by_id(ID_person)
         Instanz_von_Current_user = Klasse_person.Person(Person_Dict)
-        
 
         #Testen
-        st.write (str (Instanz_von_Current_user.calc_age()))
-        st.write (str (Instanz_von_Current_user.calc_max_heart_rate()))
+        # st.write (str (Instanz_von_Current_user.calc_age()))
+        # st.write (str (Instanz_von_Current_user.calc_max_heart_rate()))
 
+        ### KLASSE EKG
+        liste_ekg_tests = []
+        for einträge in Person_Dict ['ekg_tests']:
+            liste_ekg_tests.append(einträge['id'] )
 
+        st.session_state.current_EKG_test = st.selectbox('EKG Test [ID]', options = liste_ekg_tests, key="sbEKG_Test")
+        # Erstelle Instanz EKG test
+        EKG_Dict = Klasse_ekgdata.EKGdata.load_by_id (st.session_state.current_EKG_test)
+        Instanz_von_Current_EKG = Klasse_ekgdata.EKGdata(EKG_Dict)
+
+        # st.metric(label="Dateiname", value = Instanz_von_Current_EKG.data)
+        st.markdown ("**Dateiname:**" )
+        st.write (Instanz_von_Current_EKG.data[14:])
 
 
     # Bild in der zweiten Spalte
@@ -76,7 +89,15 @@ if selected == "Personen":
         st.write ("Vorname: " + read_data.find_person_data_by_name(st.session_state.current_user)["firstname"])
         st.write ("Nachname: " + read_data.find_person_data_by_name(st.session_state.current_user)["lastname"])
         st.write ("Geburtsjahr: " + str (read_data.find_person_data_by_name(st.session_state.current_user)["date_of_birth"]))
+        st.write ("Alter:" + str (Instanz_von_Current_user.calc_age()))
+        st.write ("Maximale Herzfrequenz:" + str (Instanz_von_Current_user.calc_max_heart_rate()))
+    
+    fig_Ekg = Instanz_von_Current_EKG.plot_time_series()
+    st.plotly_chart(fig_Ekg)
 
+    st.metric(label="Durchschnittliche Herzrate [Bpm] im angezeigten Zeitfenster", value = round(Instanz_von_Current_EKG.estimate_hr(), 2))
+   
+    # st.session_state.current_test = st.selectbox('Test', options = [[1, " ruhe"],[2, " besl"]], key="sbTest")
 
 
 if selected == "EKG":

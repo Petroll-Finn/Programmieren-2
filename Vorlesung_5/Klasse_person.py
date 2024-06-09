@@ -76,14 +76,23 @@ if __name__ == "__main__":
     print("This is a module with some functions to read the person data")
     persons = Person.load_person_data()
     person_names = Person.get_person_list(persons)
-    print(person_names)
+    # print(person_names)
     # print(Person.find_person_data_by_name("Huber, Julian"))
 
     a_dict = persons[2]
     
     a_person = Person(a_dict)
 
-    print (a_person.calc_age())
+    # print (a_person.calc_age())
     # print(a_person.calc_max_heart_rate())
     # print(Person.load_by_id(1))
     
+    Person_Dict = Person.load_by_id(3)
+    print (Person_Dict)
+    
+    liste_ekg_tests = []
+    for einträge in Person_Dict ['ekg_tests']:
+        # print (i)
+        liste_ekg_tests.append(einträge['result_link'])
+    
+    print (liste_ekg_tests)

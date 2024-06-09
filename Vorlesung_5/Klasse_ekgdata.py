@@ -1,6 +1,8 @@
 import json
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+from scipy.signal import find_peaks
 
 # %% Objekt-Welt
 
@@ -28,59 +30,60 @@ class EKGdata:
                     return eintrag_EKG_tests
 
 
-    @staticmethod
-    def find_peaks(id_EKG, respacing_factor=5):
-        # series, threshold, 
-        # A function to find the peaks in a series
-        # Args:
-            # - series (pd.Series): The series to find the peaks in
-            # - threshold (float): The threshold for the peaks
-            # - respacing_factor (int): The factor to respace the series
-        # Returns:
-            # - peaks (list): A list of the indices of the peaks
-    
-        # Respace the series
-        
-        dict_Person = EKGdata.load_by_id (id_EKG)
-        
-        
-    
-        series = series.iloc[::respacing_factor]
-        
-        # Filter the series
-        series = series[series>threshold]
 
-
-        peaks = []
-        last = 0
-        current = 0
-        next = 0
-
-        for index, row in series.items():
-            last = current
-            current = next
-            next = row
-
-            if last < current and current > next and current > threshold:
-                peaks.append(index-respacing_factor)
-
-        return peaks
-
-    def __init__(self, ekg_dict):
-        #pass
+    def __init__(self, ekg_dict, head_Werte = 2000):
         self.id = ekg_dict["id"]
         self.date = ekg_dict["date"]
         self.data = ekg_dict["result_link"]
         self.df = pd.read_csv(self.data, sep='\t', header=None, names=['Messwerte in mV','Zeit in ms',])
-
+        self.head_Werte = head_Werte
 
     def make_plot(self):
         # Erstellte einen Line Plot, der ersten 2000 Werte mit der Zeit aus der x-Achse
-        self.fig = px.line(self.df.head(2000), x="Zeit in ms", y="Messwerte in mV")
-        return self.fig 
+        self.fig = px.line(self.df, x="Zeit in ms", y="Messwerte in mV", labels ='signal')
 
     
-        
+    def return_df_Head (self):
+        df_head = self.df.head(self.head_Werte)
+        return df_head
+
+    def find_peaks (self):
+        df_head = self.return_df_Head ()
+
+        peaks_indizes, Messwerte_bei_Peaks = find_peaks(df_head['Messwerte in mV'], height=350)
+        # list_Messwerte_bei_Peaks = Messwerte_bei_Peaks ['peak_heights']
+
+        peaks_ganze_Zeitreihe_Indizes, Messwerte_Peaks_ganze_Zeitreihe_ = find_peaks(self.df['Messwerte in mV'], height=350)
+
+        return peaks_indizes, peaks_ganze_Zeitreihe_Indizes
+
+
+    def plot_time_series(self):
+        df_head = self.return_df_Head ()
+        self.peaks, _ = self.find_peaks()
+        # print (self.peaks[0])
+
+        self.fig = go.Figure()
+        self.fig.add_scatter (x=df_head['Zeit in ms'], y=df_head['Messwerte in mV'], mode='lines', name='Signal')
+        self.fig.add_scatter (x=df_head['Zeit in ms'][self.peaks], y=df_head['Messwerte in mV'][self.peaks], mode='markers', name='Peaks', marker=dict(color='red', size=10))
+        self.fig.update_layout(title='Plot des Ekg Signals mit Peaks', xaxis_title='Zeit [ms]', yaxis_title='Amplitude [Mv]')
+
+        return self.fig 
+    
+    def estimate_hr(self):
+        self.peaks, _ = self.find_peaks()
+        peak_differenz = [self.peaks[i+1] - self.peaks[i] for i in range(len(self.peaks)-1)]
+        durchschnittliche_peak_diff = sum(peak_differenz) / len(peak_differenz)
+        Herzrate= 60 / (durchschnittliche_peak_diff / 500) # 500 wegen aufnamen der Daten in [2 ms] schritten
+
+        # _, self.peaks_ganze_zeitreihe = self.find_peaks()
+        # peak_differenz = [self.peaks_ganze_zeitreihe[i+1] - self.peaks_ganze_zeitreihe[i] for i in range(len(self.peaks_ganze_zeitreihe)-1)]
+        # durchschnittliche_peak_diff = sum(peak_differenz) / len(peak_differenz)
+        # Herzrate= 60 / (durchschnittliche_peak_diff / 500) # 500 wegen aufnamen der Daten in [2 ms] schritten
+
+        print (Herzrate)
+        return Herzrate
+    
 
 
 if __name__ == "__main__":
@@ -90,15 +93,22 @@ if __name__ == "__main__":
     person_data = json.load(file)
     # print(person_data)
     
-    
-    ekg_dict = person_data[0]["ekg_tests"][0]
-    # print(ekg_dict)
-    ekg = EKGdata(ekg_dict)
-    # print (ekg)
+    ekg_dict1 = person_data[1]["ekg_tests"][0]
+    print(ekg_dict1)
+    ekg = EKGdata (ekg_dict1, 2000)
+    # print (ekg.df)
+
+    tuple1= ekg.find_peaks()
+    # print (tuple1[1])
+
+    ekg.estimate_hr()
     # print(ekg.df.head())
     # EKGdata.find_peaks(1)
 
-    print (EKGdata.load_by_id(4))
+
+    fig = ekg.plot_time_series()
+    # fig.show()
+    # print (EKGdata.load_by_id(4))
 
 
 
